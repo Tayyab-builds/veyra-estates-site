@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+@theme {
+  /* ============================================================
+     VEYRA DESIGN SYSTEM — v2
+     Direction: trust + sophistication + warmth + architectural
+     luxury. A restrained palette (deep ink, warm ivory, stone)
+     carries the identity; brass and sage are accents only.
+     ============================================================ */
+
+  /* --- Core semantic tokens ------------------------------------ */
+  --color-ink: #18211f;              /* primary ink — text, dark sections */
+  --color-ink-secondary: #2c302d;    /* deeper warm charcoal — dark-on-dark surfaces */
+  --color-ink-muted: #77746d;        /* warm stone-gray — muted copy on light surfaces */
+
+  --color-surface: #f5f1e8;          /* warm ivory — panels, cards, light text-on-dark */
+  --color-surface-secondary: #e7e0d4;/* soft limestone/stone — page background */
+  --color-border: #d7d0c5;           /* soft warm gray — hairlines, dividers */
+
+  --color-sage: #7c887e;             /* architectural sage — quiet secondary accent */
+  --color-sage-soft: #eef0ec;
+
+  --color-accent: #ad8a52;           /* antique brass — primary interactive accent */
+  --color-accent-light: #c1a06b;
+  --color-accent-dark: #8f6f3d;
+  --color-accent-soft: #f1e9d8;      /* faint brass wash for badges/backgrounds */
+
+  --color-clay: #a9613f;             /* muted clay — secondary warm accent + form errors */
+  --color-clay-light: #be7b57;
+  --color-clay-dark: #8b4c30;
+
+  --color-wine: #5b3238;             /* deep muted wine — saved/favorited + admin accents */
+
+  --color-success: #7c887e;
+  --color-danger: #8b4c30;
+
+  /* --- Legacy aliases (kept 1:1 so every existing class keeps
+     working — components inherit the new palette automatically) - */
+  --color-plum: var(--color-ink);
+  --color-ivory: var(--color-surface);
+  --color-sand: var(--color-surface-secondary);
+  --color-parchment: var(--color-surface-secondary);
+  --color-stone: var(--color-border);
+
+  --color-olive: var(--color-accent);
+  --color-olive-light: var(--color-accent-light);
+  --color-olive-dark: var(--color-accent-dark);
+
+  --color-terracotta: var(--color-clay);
+  --color-terracotta-light: var(--color-clay-light);
+  --color-terracotta-dark: var(--color-clay-dark);
+
+  --color-aubergine: var(--color-wine);
+  --color-rose: var(--color-wine);
+
+  /* --- Typography ------------------------------------------------ */
+  --font-display: "Playfair Display", serif;
+  --font-body: "Inter", sans-serif;
+
+  --max-width-content: 1440px;
+
+  --tracking-wide2: 0.14em;
+
+  /* --- Motion system -----------------------------------------------
+     A small, deliberate set of timings/easings shared by CSS
+     transitions, Tailwind's `duration-*`/`ease-*` utilities, and the
+     framer-motion Reveal primitive (see components/motion/Reveal.jsx,
+     which mirrors these values in JS since framer-motion doesn't read
+     CSS custom properties for its own transition config).
+     ------------------------------------------------------------- */
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --duration-fast: 180ms;
+  --duration-standard: 300ms;
+  --duration-editorial: 600ms;
+  --duration-stagger: 80ms;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  section[id],
+  footer[id] {
+    scroll-margin-top: 6.5rem;
+  }
+
+  body {
+    @apply bg-parchment text-plum font-body antialiased;
+    font-feature-settings: 'ss01' on, 'ss02' on;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display text-plum;
+    letter-spacing: -0.01em;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-surface);
+  }
+
+  a, button {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer utilities {
+  .container-veyra {
+    @apply mx-auto w-full max-w-content px-6 sm:px-8 lg:px-12;
+  }
+
+  .hairline {
+    @apply border-stone;
+  }
+
+  /* Editorial eyebrow label — small uppercase kicker used above
+     section headings to build hierarchy without adding more cards. */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[0.7rem] font-medium uppercase tracking-[0.24em] text-olive-dark;
+  }
+
+  .eyebrow::before {
+    content: '';
+    @apply block h-px w-6 bg-olive;
+  }
+
+  /* Eyebrow variants for the authentication pages. Same kicker pattern as
+     `.eyebrow`, re-toned for the two surfaces those pages are built from —
+     deep ink (heroes, form panels) and warm ivory (editorial sections) —
+     where the base brass tone doesn't hold enough text contrast. */
+  .eyebrow-dark {
+    @apply inline-flex items-center gap-2.5 text-[0.7rem] font-medium uppercase tracking-[0.24em] text-ivory/70;
+  }
+
+  .eyebrow-dark::before {
+    content: '';
+    @apply block h-px w-6 bg-accent-light/70;
+  }
+
+  .eyebrow-soft {
+    @apply inline-flex items-center gap-2.5 text-[0.7rem] font-medium uppercase tracking-[0.24em] text-plum/75;
+  }
+
+  .eyebrow-soft::before {
+    content: '';
+    @apply block h-px w-6 bg-accent/80;
+  }
+}
